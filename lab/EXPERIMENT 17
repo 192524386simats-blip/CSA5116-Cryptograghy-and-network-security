@@ -1,0 +1,45 @@
+
+#include <stdio.h>
+
+int main()
+{
+    int shift[16] =
+    {1,1,2,2,2,2,2,2,1,2,2,2,2,2,2,1};
+
+    int key[16];
+
+    printf("DES Decryption Key Schedule\n");
+
+    for(int i = 0; i < 16; i++)
+    {
+        key[i] = 16 - i;
+    }
+
+    printf("\nDecryption subkey order:\n");
+
+    for(int i = 0; i < 16; i++)
+    {
+        printf("K%d ", key[i]);
+    }
+
+    printf("\n\nShift schedule:\n");
+
+    for(int i = 0; i < 16; i++)
+    {
+        printf("%d ", shift[i]);
+    }
+
+    printf("\n");
+    return 0;
+}
+
+Output:
+
+DES Decryption Key Schedule
+
+Decryption subkey order:
+K16 K15 K14 K13 K12 K11 K10 K9
+K8 K7 K6 K5 K4 K3 K2 K1
+
+Shift schedule:
+1 1 2 2 2 2 2 2 1 2 2 2 2 2 2 1
