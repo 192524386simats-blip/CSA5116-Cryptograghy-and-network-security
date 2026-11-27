@@ -1,0 +1,46 @@
+
+#include <stdio.h>
+
+int main()
+{
+    int total = 1600;
+    int rate = 1024;
+    int lane = 64;
+
+    int totalLanes = total / lane;
+    int rateLanes = rate / lane;
+    int capacityLanes = (total - rate) / lane;
+
+    printf("SHA-3 LANE CALCULATION\n");
+
+    printf("Total state size: %d bits\n", total);
+    printf("Block size: %d bits\n", rate);
+    printf("Lane size: %d bits\n", lane);
+
+    printf("\nTotal lanes: %d\n", totalLanes);
+    printf("Rate lanes: %d\n", rateLanes);
+    printf("Capacity lanes: %d\n", capacityLanes);
+
+    printf("\nInitially zero capacity lanes: %d\n",
+           capacityLanes);
+
+    printf("After XOR absorption without permutation, ");
+    printf("capacity lanes remain zero.\n");
+
+    return 0;
+}
+
+
+OUTPUT:
+
+SHA-3 LANE CALCULATION
+Total state size: 1600 bits
+Block size: 1024 bits
+Lane size: 64 bits
+
+Total lanes: 25
+Rate lanes: 16
+Capacity lanes: 9
+
+Initially zero capacity lanes: 9
+After XOR absorption without permutation, capacity lanes remain zero.
