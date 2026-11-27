@@ -1,0 +1,81 @@
+
+#include <stdio.h>
+
+int main()
+{
+    int p[100], c[100], d[100];
+    int n, a, b, counter, stream;
+    int i;
+
+    printf("Enter number of plaintext bytes: ");
+    scanf("%d", &n);
+
+    if(n <= 0 || n > 100)
+        return 0;
+
+    printf("Enter affine keys a and b: ");
+    scanf("%d%d", &a, &b);
+
+    if(a < 0 || a >= 256 || b < 0 || b >= 256)
+    {
+        printf("Invalid key");
+        return 0;
+    }
+
+    int x = a, y = 256;
+
+    while(y != 0)
+    {
+        int t = y;
+        y = x % y;
+        x = t;
+    }
+
+    if(x != 1)
+    {
+        printf("Invalid key: a must be coprime to 256");
+        return 0;
+    }
+
+    printf("Enter plaintext bytes (0-255):\n");
+
+    for(i = 0; i < n; i++)
+        scanf("%d", &p[i]);
+
+    printf("\nCTR Encryption:\n");
+
+    for(i = 0; i < n; i++)
+    {
+        counter = i;
+        stream = (a * counter + b) % 256;
+        c[i] = p[i] ^ stream;
+        printf("%d ", c[i]);
+    }
+
+    printf("\n\nCTR Decryption:\n");
+
+    for(i = 0; i < n; i++)
+    {
+        counter = i;
+        stream = (a * counter + b) % 256;
+        d[i] = c[i] ^ stream;
+        printf("%d ", d[i]);
+    }
+
+    return 0;
+}
+
+SAMPLE INPUT:
+
+Enter number of plaintext bytes: 3
+Enter affine keys a and b: 5 8
+Enter plaintext bytes (0-255):
+1 2 4
+
+OUTPUT:
+
+CTR Encryption:
+9 15 22
+
+CTR Decryption:
+1 2 4
