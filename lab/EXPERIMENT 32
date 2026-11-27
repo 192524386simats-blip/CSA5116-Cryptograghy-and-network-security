@@ -1,0 +1,76 @@
+
+#include <stdio.h>
+
+long long power(long long a, long long b, long long m)
+{
+    long long r = 1;
+
+    while(b > 0)
+    {
+        r = (r * a) % m;
+        a = (a * a) % m;
+        b /= 2;
+    }
+
+    return r;
+}
+
+int inverse(int a, int m)
+{
+    for(int i = 1; i < m; i++)
+        if((a * i) % m == 1)
+            return i;
+
+    return -1;
+}
+
+int main()
+{
+    int p = 23, q = 11;
+    int g = 4, x = 3;
+    int h = 9;
+    int y = power(g, x, p);
+
+    int k[2] = {2, 7};
+    int r, s;
+
+    printf("DSA DIGITAL SIGNATURE\n");
+    printf("Public key y = %d\n", y);
+
+    for(int j = 0; j < 2; j++)
+    {
+        r = power(g, k[j], p) % q;
+
+        s = (inverse(k[j], q) *
+             (h + x * r)) % q;
+
+        printf("\nSignature %d\n", j + 1);
+        printf("Random k = %d\n", k[j]);
+        printf("r = %d\n", r);
+        printf("s = %d\n", s);
+    }
+
+    printf("\nDifferent random k values produce ");
+    printf("different signatures.");
+
+    return 0;
+}
+
+
+OUTPUT:
+
+
+DSA DIGITAL SIGNATURE
+Public key y = 18
+
+Signature 1
+Random k = 2
+r = 5
+s = 2
+
+Signature 2
+Random k = 7
+r = 8
+s = 3
+
+Different random k values produce different signatures.
