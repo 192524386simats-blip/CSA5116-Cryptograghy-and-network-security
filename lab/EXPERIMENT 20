@@ -1,0 +1,60 @@
+
+#include <stdio.h>
+
+int main()
+{
+    int i, errorBlock;
+
+    printf("ECB AND CBC ERROR PROPAGATION\n");
+
+    printf("\nEnter the block containing error (1-5): ");
+    scanf("%d", &errorBlock);
+
+    if(errorBlock < 1 || errorBlock > 5)
+    {
+        printf("Invalid block number");
+        return 0;
+    }
+
+    printf("\nECB MODE:\n");
+
+    for(i = 1; i <= 5; i++)
+    {
+        if(i == errorBlock)
+            printf("P%d : CORRUPTED\n", i);
+        else
+            printf("P%d : CORRECT\n", i);
+    }
+
+    printf("\nCBC MODE:\n");
+
+    for(i = 1; i <= 5; i++)
+    {
+        if(i == errorBlock)
+            printf("P%d : CORRUPTED COMPLETELY\n", i);
+        else if(i == errorBlock + 1)
+            printf("P%d : ONE BIT AFFECTED\n", i);
+        else
+            printf("P%d : CORRECT\n", i);
+    }
+
+    return 0;
+}
+
+
+OUTPUT:
+ECB AND CBC ERROR PROPAGATION
+
+ECB MODE:
+P1 : CORRUPTED
+P2 : CORRECT
+P3 : CORRECT
+P4 : CORRECT
+P5 : CORRECT
+
+CBC MODE:
+P1 : CORRUPTED COMPLETELY
+P2 : ONE BIT AFFECTED
+P3 : CORRECT
+P4 : CORRECT
+P5 : CORRECT
