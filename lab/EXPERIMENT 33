@@ -1,0 +1,55 @@
+
+#include <stdio.h>
+#include <string.h>
+#include <openssl/des.h>
+
+int main()
+{
+    DES_cblock key;
+    DES_key_schedule schedule;
+
+    DES_cblock plaintext =
+        {'H','E','L','L','O','1','2','3'};
+
+    DES_cblock encrypted;
+    DES_cblock decrypted;
+
+    memcpy(key, "12345678", 8);
+
+    DES_set_key_unchecked(&key, &schedule);
+
+    DES_ecb_encrypt(&plaintext, &encrypted,
+                    &schedule, DES_ENCRYPT);
+
+    DES_ecb_encrypt(&encrypted, &decrypted,
+                    &schedule, DES_DECRYPT);
+
+    printf("DES ENCRYPTION AND DECRYPTION\n");
+
+    printf("Original Plaintext: ");
+    for(int i = 0; i < 8; i++)
+        printf("%c", plaintext[i]);
+
+    printf("\nEncrypted Ciphertext: ");
+
+    for(int i = 0; i < 8; i++)
+        printf("%02X ", encrypted[i]);
+
+    printf("\nDecrypted Plaintext: ");
+
+    for(int i = 0; i < 8; i++)
+        printf("%c", decrypted[i]);
+
+    printf("\n");
+
+    return 0;
+}
+
+
+OUTPUT:
+
+
+DES ENCRYPTION AND DECRYPTION
+Original Plaintext: HELLO123
+Encrypted Ciphertext: [8 hexadecimal bytes]
+Decrypted Plaintext: HELLO123
