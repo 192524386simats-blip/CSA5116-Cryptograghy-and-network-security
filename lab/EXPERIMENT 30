@@ -1,0 +1,54 @@
+
+#include <stdio.h>
+
+int encrypt(int x)
+{
+    return (5 * x + 7) % 256;
+}
+
+int main()
+{
+    int X, T, secondBlock;
+    int firstMAC, secondMAC;
+
+    printf("Enter one-byte message (0-255): ");
+    scanf("%d", &X);
+
+    if(X < 0 || X > 255)
+    {
+        printf("Invalid input");
+        return 0;
+    }
+
+    T = encrypt(X);
+
+    secondBlock = X ^ T;
+
+    firstMAC = encrypt(X);
+
+    secondMAC = encrypt(T ^ secondBlock);
+
+    printf("\nCBC MAC DEMONSTRATION\n");
+
+    printf("Original message X = %d\n", X);
+    printf("Original MAC T = %d\n", firstMAC);
+
+    printf("Second block (X XOR T) = %d\n",
+           secondBlock);
+
+    printf("Two-block message MAC = %d\n", secondMAC);
+
+    if(firstMAC == secondMAC)
+        printf("\nBoth MAC values are equal.");
+
+    return 0;
+}
+OUTPUT:
+
+CBC MAC DEMONSTRATION
+Original message X = 42
+Original MAC T = 217
+Second block (X XOR T) = 243
+Two-block message MAC = 217
+
+Both MAC values are equal.
