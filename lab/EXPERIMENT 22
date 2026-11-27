@@ -1,0 +1,93 @@
+
+#include <stdio.h>
+
+int gcd(int a, int b)
+{
+    while(b)
+    {
+        int t = b;
+        b = a % b;
+        a = t;
+    }
+    return a;
+}
+
+int inverse(int a)
+{
+    int i;
+    for(i = 1; i < 256; i++)
+        if((a * i) % 256 == 1)
+            return i;
+    return -1;
+}
+
+int main()
+{
+    int p[100], c[100], d[100];
+    int n, a, b, iv, inv, i, prev;
+
+    printf("Enter number of bytes: ");
+    scanf("%d", &n);
+
+    if(n <= 0 || n > 100)
+        return 0;
+
+    printf("Enter a and b: ");
+    scanf("%d%d", &a, &b);
+
+    if(gcd(a, 256) != 1)
+    {
+        printf("Invalid key a");
+        return 0;
+    }
+
+    inv = inverse(a);
+
+    printf("Enter IV (0-255): ");
+    scanf("%d", &iv);
+
+    printf("Enter plaintext bytes (0-255):\n");
+
+    for(i = 0; i < n; i++)
+        scanf("%d", &p[i]);
+
+    prev = iv;
+
+    for(i = 0; i < n; i++)
+    {
+        c[i] = (a * ((p[i] + prev) % 256) + b) % 256;
+        prev = c[i];
+    }
+
+    printf("\nEncrypted CBC:\n");
+    for(i = 0; i < n; i++)
+        printf("%d ", c[i]);
+
+    prev = iv;
+
+    for(i = 0; i < n; i++)
+    {
+        d[i] = ((inv * (c[i] - b + 256) % 256)
+                - prev + 256) % 256;
+        prev = c[i];
+    }
+
+    printf("\nDecrypted plaintext:\n");
+    for(i = 0; i < n; i++)
+        printf("%d ", d[i]);
+
+    return 0;
+}
+SAMPLE INPUT:
+
+Enter number of bytes: 4
+Enter a and b: 5 8
+Enter IV (0-255): 10
+Enter plaintext bytes (0-255):
+1 2 3 4
+
+OUTPUT:
+Encrypted CBC:
+63 103 98 249
+Decrypted plaintext:
+1 2 3 4
