@@ -1,0 +1,74 @@
+
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int main()
+{
+    char text[1000];
+    char freq[] = "ETAOINSHRDLCUMWFGYPBVKJXQZ";
+    int count[26] = {0};
+    int used[26] = {0};
+    int order[26];
+    int i, j, max;
+
+    printf("Enter ciphertext: ");
+    fgets(text, sizeof(text), stdin);
+
+    for(i = 0; text[i] != '\0'; i++)
+    {
+        if(isalpha((unsigned char)text[i]))
+            count[toupper((unsigned char)text[i]) - 'A']++;
+    }
+
+    for(i = 0; i < 26; i++)
+    {
+        max = -1;
+
+        for(j = 0; j < 26; j++)
+        {
+            if(!used[j] && count[j] > max)
+            {
+                max = count[j];
+                order[i] = j;
+            }
+        }
+
+        used[order[i]] = 1;
+    }
+
+    printf("\nPossible plaintext:\n");
+
+    for(i = 0; text[i] != '\0'; i++)
+    {
+        if(isalpha((unsigned char)text[i]))
+        {
+            int index = toupper((unsigned char)text[i]) - 'A';
+            char ch = freq[0];
+
+            for(j = 0; j < 26; j++)
+            {
+                if(order[j] == index)
+                {
+                    ch = freq[j];
+                    break;
+                }
+            }
+
+            if(islower((unsigned char)text[i]))
+                ch = tolower(ch);
+
+            printf("%c", ch);
+        }
+        else
+            printf("%c", text[i]);
+    }
+
+    return 0;
+}
+
+
+OUTPUT:
+
+Possible plaintext:
+EHTTA ATIAH
