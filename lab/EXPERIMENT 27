@@ -1,0 +1,56 @@
+
+#include <stdio.h>
+
+long long power(int base, int exp, int mod)
+{
+    long long result = 1;
+
+    while(exp > 0)
+    {
+        result = (result * base) % mod;
+        exp--;
+    }
+
+    return result;
+}
+
+int main()
+{
+    char msg[100];
+    int e, n, i;
+
+    printf("Enter message: ");
+    scanf("%99s", msg);
+
+    printf("Enter public exponent: ");
+    scanf("%d", &e);
+
+    printf("Enter modulus: ");
+    scanf("%d", &n);
+
+    printf("\nRSA ENCRYPTION\n");
+    printf("Encrypted characters:\n");
+
+    for(i = 0; msg[i] != '\0'; i++)
+    {
+        int p = msg[i] - 'A';
+
+        if(msg[i] < 'A' || msg[i] > 'Z')
+        {
+            printf("Use uppercase letters only.");
+            return 0;
+        }
+
+        printf("%lld ", power(p, e, n));
+    }
+
+    printf("\n");
+    return 0;
+}
+
+
+OUTPUT:
+
+RSA ENCRYPTION
+Encrypted characters:
+84 12 67 67 8
