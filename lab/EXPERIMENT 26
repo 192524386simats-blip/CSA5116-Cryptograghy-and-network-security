@@ -1,0 +1,52 @@
+
+#include <stdio.h>
+
+int gcd(int a, int b)
+{
+    while(b)
+    {
+        int t = b;
+        b = a % b;
+        a = t;
+    }
+    return a;
+}
+
+int main()
+{
+    int p = 11, q = 13;
+    int n = p * q;
+    int phi = (p - 1) * (q - 1);
+    int e = 7, d = 0;
+    int newe = 11, newd = 0;
+
+    while((e * d) % phi != 1)
+        d++;
+
+    while((newe * newd) % phi != 1)
+        newd++;
+
+    printf("RSA KEY GENERATION\n");
+    printf("Original public key: (%d, %d)\n", e, n);
+    printf("Original private key: %d\n", d);
+
+    printf("\nNew public key: (%d, %d)\n", newe, n);
+    printf("New private key: %d\n", newd);
+
+    printf("\nModulus remains same: %d\n", n);
+    printf("Generating new keys with same modulus is unsafe.\n");
+
+    return 0;
+}
+
+OUTPUT:
+
+RSA KEY GENERATION
+Original public key: (7, 143)
+Original private key: 103
+
+New public key: (11, 143)
+New private key: 11
+
+Modulus remains same: 143
+Generating new keys with same modulus is unsafe.
