@@ -1,0 +1,54 @@
+
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char plaintext[200];
+    int blockSize, length, padding;
+
+    printf("Enter binary plaintext: ");
+    scanf("%199s", plaintext);
+
+    printf("Enter block size: ");
+    scanf("%d", &blockSize);
+
+    if(blockSize <= 0)
+    {
+        printf("Invalid block size");
+        return 0;
+    }
+
+    length = strlen(plaintext);
+
+    for(int i = 0; i < length; i++)
+    {
+        if(plaintext[i] != '0' && plaintext[i] != '1')
+        {
+            printf("Invalid binary input");
+            return 0;
+        }
+    }
+
+    padding = blockSize - (length % blockSize);
+
+    printf("\nOriginal plaintext: %s", plaintext);
+
+    printf("\nPadded plaintext: %s", plaintext);
+
+    printf("1");
+
+    for(int i = 1; i < padding; i++)
+        printf("0");
+
+    printf("\nTotal length: %d\n", length + padding);
+
+    return 0;
+}
+
+
+OUTPUT:
+
+Original plaintext: 10101010
+Padded plaintext: 1010101010000000
+Total length: 16
