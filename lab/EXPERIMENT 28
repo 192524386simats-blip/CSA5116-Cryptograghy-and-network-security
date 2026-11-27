@@ -1,0 +1,65 @@
+
+#include <stdio.h>
+
+int power(int base, int exp, int mod)
+{
+    int result = 1;
+
+    while(exp > 0)
+    {
+        result = (result * base) % mod;
+        exp--;
+    }
+
+    return result;
+}
+
+int main()
+{
+    int p = 23, g = 5;
+    int a = 6, b = 15;
+    int A, B, key1, key2;
+
+    A = power(g, a, p);
+    B = power(g, b, p);
+
+    key1 = power(B, a, p);
+    key2 = power(A, b, p);
+
+    printf("DIFFIE-HELLMAN KEY EXCHANGE\n");
+
+    printf("Prime number: %d\n", p);
+    printf("Generator: %d\n", g);
+
+    printf("\nAlice private key: %d\n", a);
+    printf("Bob private key: %d\n", b);
+
+    printf("\nAlice public key: %d\n", A);
+    printf("Bob public key: %d\n", B);
+
+    printf("\nAlice shared key: %d\n", key1);
+    printf("Bob shared key: %d\n", key2);
+
+    if(key1 == key2)
+        printf("\nShared key established successfully.");
+
+    return 0;
+}
+
+
+OUTPUT:
+
+DIFFIE-HELLMAN KEY EXCHANGE
+Prime number: 23
+Generator: 5
+
+Alice private key: 6
+Bob private key: 15
+
+Alice public key: 8
+Bob public key: 19
+
+Alice shared key: 2
+Bob shared key: 2
+
+Shared key established successfully.
