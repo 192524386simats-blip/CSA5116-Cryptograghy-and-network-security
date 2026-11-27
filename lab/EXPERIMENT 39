@@ -1,0 +1,44 @@
+
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int main()
+{
+    char cipher[500];
+    int shift, i;
+
+    printf("Enter ciphertext: ");
+    fgets(cipher, sizeof(cipher), stdin);
+
+    printf("\nPossible plaintexts:\n");
+
+    for(shift = 0; shift < 26; shift++)
+    {
+        printf("\nShift %2d: ", shift);
+
+        for(i = 0; cipher[i] != '\0'; i++)
+        {
+            if(isalpha((unsigned char)cipher[i]))
+            {
+                char ch = toupper((unsigned char)cipher[i]);
+                ch = (ch - 'A' - shift + 26) % 26 + 'A';
+                printf("%c", ch);
+            }
+            else
+                printf("%c", cipher[i]);
+        }
+    }
+
+    return 0;
+}
+
+
+OUTPUT:
+
+Possible plaintexts:
+
+Shift  0: KHOOR ZRUOG
+Shift  1: JGNNQ YQTNF
+Shift  2: IFMMP XPSME
+Shift  3: HELLO WORLD
